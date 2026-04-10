@@ -6,7 +6,7 @@ A Maven plugin that compresses static resources using [Brotli](https://github.co
 
 If your web application serves static resources (JavaScript, CSS, SVG, etc.) and your web server supports serving pre-compressed files, this plugin generates `.br` and `.gz` variants at build time so the server can serve them directly without compressing on every request.
 
-This plugin is designed to work with Spring Framework's `ResourceResolver` chain. The default resource directories and file extensions match Spring Boot's conventions out of the box.
+This plugin is designed to work with Spring Framework's `ResourceResolver` chain. The default resource directories and file extensions match Spring Boot's conventions out of the box. See [Spring Boot integration](#spring-boot-integration) for setup details.
 
 ## Usage
 
