@@ -131,7 +131,7 @@
 					<streamLogsOnFailures>true</streamLogsOnFailures>
 					<goals>
 						<goal>clean</goal>
-						<goal>prepare-package</goal>
+						<goal>process-resources</goal>
 					</goals>
 				</configuration>
 				<executions>

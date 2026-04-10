@@ -27,7 +27,7 @@ Add the plugin to your `pom.xml`:
 </plugin>
 ```
 
-By default, this compresses all text-based static resource files under Spring Boot's standard static resource directories (`META-INF/resources`, `resources`, `static`, `public`) in `${project.build.outputDirectory}` during the `prepare-package` phase. For each file, it creates:
+By default, this compresses all text-based static resource files under Spring Boot's standard static resource directories (`META-INF/resources`, `resources`, `static`, `public`) in `${project.build.outputDirectory}` during the `process-resources` phase. For each file, it creates:
 
 - `<filename>.br` -- Brotli compressed (quality 11)
 - `<filename>.gz` -- Gzip compressed
