@@ -121,6 +121,7 @@ The default value of 11 gives the best compression. For faster builds (e.g., dur
 This plugin generates pre-compressed files that Spring Framework's `EncodedResourceResolver` can serve automatically. To enable this, add the following property to your `application.properties`:
 
 ```properties
+spring.web.resources.chain.enabled=true
 spring.web.resources.chain.compressed=true
 ```
 

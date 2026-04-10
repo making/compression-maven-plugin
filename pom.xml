@@ -129,6 +129,7 @@
 					<settingsFile>src/it/settings.xml</settingsFile>
 					<localRepositoryPath>${project.build.directory}/local-repo</localRepositoryPath>
 					<streamLogsOnFailures>true</streamLogsOnFailures>
+					<postBuildHookScript>verify</postBuildHookScript>
 					<goals>
 						<goal>clean</goal>
 						<goal>process-resources</goal>

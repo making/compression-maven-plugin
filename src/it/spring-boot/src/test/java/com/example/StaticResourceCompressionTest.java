@@ -19,7 +19,7 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-class StaticResourceCompressionIT {
+class StaticResourceCompressionTest {
 
 	@LocalServerPort
 	int port;
