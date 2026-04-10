@@ -1,6 +1,6 @@
 # Compression Maven Plugin
 
-A Maven plugin that compresses static resources using [Brotli](https://github.com/google/brotli) and Gzip. It replaces the Groovy/Ant script approach typically used with `gmavenplus-plugin` with a single plugin declaration.
+A Maven plugin that compresses static resources using [Brotli](https://github.com/google/brotli) and Gzip.
 
 ## When to use this plugin
 
@@ -35,31 +35,19 @@ By default, this compresses all text-based static resource files under Spring Bo
 ### Example: Custom extensions and directories
 
 ```xml
-<plugin>
-    <groupId>am.ik.maven</groupId>
-    <artifactId>compression-maven-plugin</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
-    <executions>
-        <execution>
-            <goals>
-                <goal>compress</goal>
-            </goals>
-        </execution>
-    </executions>
-    <configuration>
-        <fileExtensions>
-            <fileExtension>js</fileExtension>
-            <fileExtension>css</fileExtension>
-            <fileExtension>svg</fileExtension>
-            <fileExtension>html</fileExtension>
-            <fileExtension>json</fileExtension>
-        </fileExtensions>
-        <resourceDirectories>
-            <resourceDirectory>static</resourceDirectory>
-            <resourceDirectory>public</resourceDirectory>
-        </resourceDirectories>
-    </configuration>
-</plugin>
+<configuration>
+    <fileExtensions>
+        <fileExtension>js</fileExtension>
+        <fileExtension>css</fileExtension>
+        <fileExtension>svg</fileExtension>
+        <fileExtension>html</fileExtension>
+        <fileExtension>json</fileExtension>
+    </fileExtensions>
+    <resourceDirectories>
+        <resourceDirectory>static</resourceDirectory>
+        <resourceDirectory>public</resourceDirectory>
+    </resourceDirectories>
+</configuration>
 ```
 
 ### Example: Brotli only
@@ -78,12 +66,19 @@ By default, this compresses all text-based static resource files under Spring Bo
 </configuration>
 ```
 
-### Example: Using Maven properties
+### Example: Lower Brotli quality for faster builds
+
+```xml
+<configuration>
+    <brotliQuality>6</brotliQuality>
+</configuration>
+```
+
+Or using Maven properties:
 
 ```xml
 <properties>
     <compression.brotli.quality>6</compression.brotli.quality>
-    <compression.skip>true</compression.skip>
 </properties>
 ```
 
