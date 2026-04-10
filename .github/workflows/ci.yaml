@@ -27,8 +27,8 @@ jobs:
         java-version: '25'
         distribution: 'liberica'
         cache: maven
-    - name: Unit Tests
-      run: ./mvnw -V --no-transfer-progress clean test
+    - name: Tests
+      run: ./mvnw -V --no-transfer-progress clean verify
   deploy:
     needs: test
     if: github.event_name != 'pull_request'
