@@ -100,7 +100,7 @@ All configuration parameters can be set either in the plugin `<configuration>` b
 
 The following text-based file extensions are compressed by default:
 
-`css`, `csv`, `htm`, `html`, `js`, `json`, `map`, `mjs`, `mts`, `svg`, `ts`, `txt`, `webmanifest`, `xml`, `yaml`, `yml`
+`css`, `csv`, `htm`, `html`, `js`, `json`, `map`, `mjs`, `mts`, `svg`, `ts`, `txt`, `wasm`, `webmanifest`, `xml`, `yaml`, `yml`
 
 These are common web resource types that benefit significantly from compression. Binary formats (images, fonts, etc.) are already compressed and should not be included.
 

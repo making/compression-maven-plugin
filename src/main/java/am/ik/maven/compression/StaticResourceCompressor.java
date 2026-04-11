@@ -38,7 +38,7 @@ public final class StaticResourceCompressor {
 	 * resource types that benefit from compression.
 	 */
 	public static final Set<String> DEFAULT_EXTENSIONS = Set.of("css", "csv", "htm", "html", "js", "json", "map", "mjs",
-			"mts", "svg", "ts", "txt", "webmanifest", "xml", "yaml", "yml");
+			"mts", "svg", "ts", "txt", "wasm", "webmanifest", "xml", "yaml", "yml");
 
 	private final Set<String> extensions;
 
