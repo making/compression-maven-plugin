@@ -16,7 +16,7 @@ Add the plugin to your `pom.xml`:
 <plugin>
     <groupId>am.ik.maven</groupId>
     <artifactId>compression-maven-plugin</artifactId>
-    <version>0.2.0</version>
+    <version>0.2.1</version>
     <executions>
         <execution>
             <goals>
