@@ -132,7 +132,7 @@
 					<postBuildHookScript>verify</postBuildHookScript>
 					<goals>
 						<goal>clean</goal>
-						<goal>process-resources</goal>
+						<goal>compile</goal>
 					</goals>
 				</configuration>
 				<executions>

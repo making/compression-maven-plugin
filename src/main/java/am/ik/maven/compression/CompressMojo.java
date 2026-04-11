@@ -34,7 +34,7 @@ import org.apache.maven.plugins.annotations.Parameter;
  * resource directories for files matching the specified extensions and creates compressed
  * variants.
  */
-@Mojo(name = "compress", defaultPhase = LifecyclePhase.PROCESS_RESOURCES, threadSafe = true)
+@Mojo(name = "compress", defaultPhase = LifecyclePhase.COMPILE, threadSafe = true)
 public class CompressMojo extends AbstractMojo {
 
 	/**
