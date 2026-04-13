@@ -9,7 +9,7 @@
 	<version>0.3.0-SNAPSHOT</version>
 	<packaging>maven-plugin</packaging>
 	<name>compression-maven-plugin</name>
-	<description>A Maven plugin that compresses static resources using Brotli and Gzip</description>
+	<description>A Maven plugin that compresses static resources using Brotli, Gzip, and Zstandard</description>
 
 	<properties>
 		<java.version>17</java.version>
@@ -19,6 +19,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.version>3.9.14</maven.version>
 		<brotli4j.version>1.22.0</brotli4j.version>
+		<zstd-jni.version>1.5.7-7</zstd-jni.version>
 		<spring-boot.version>4.0.5</spring-boot.version>
 	</properties>
 	<licenses>
@@ -71,6 +72,11 @@
 			<groupId>com.aayushatharva.brotli4j</groupId>
 			<artifactId>brotli4j</artifactId>
 			<version>${brotli4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.luben</groupId>
+			<artifactId>zstd-jni</artifactId>
+			<version>${zstd-jni.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>

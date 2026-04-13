@@ -1,10 +1,10 @@
 # Compression Maven Plugin
 
-A Maven plugin that compresses static resources using [Brotli](https://github.com/google/brotli) and Gzip.
+A Maven plugin that compresses static resources using [Brotli](https://github.com/google/brotli), Gzip, and [Zstandard](https://facebook.github.io/zstd/).
 
 ## When to use this plugin
 
-If your web application serves static resources (JavaScript, CSS, SVG, etc.) and your web server supports serving pre-compressed files, this plugin generates `.br` and `.gz` variants at build time so the server can serve them directly without compressing on every request.
+If your web application serves static resources (JavaScript, CSS, SVG, etc.) and your web server supports serving pre-compressed files, this plugin generates `.br`, `.gz`, and `.zst` variants at build time so the server can serve them directly without compressing on every request.
 
 This plugin is designed to work with Spring Framework's `ResourceResolver` chain. The default resource directories and file extensions match Spring Boot's conventions out of the box. See [Spring Boot integration](#spring-boot-integration) for setup details.
 
@@ -31,6 +31,9 @@ By default, this compresses all text-based static resource files under Spring Bo
 
 - `<filename>.br` -- Brotli compressed (quality 11)
 - `<filename>.gz` -- Gzip compressed
+- `<filename>.zst` -- Zstandard compressed (level 22)
+
+> Note: Spring Framework's `EncodedResourceResolver` does not yet serve pre-compressed `.zst` files. Support is pending in [spring-projects/spring-framework#36647](https://github.com/spring-projects/spring-framework/pull/36647). If you serve assets via Spring's resource chain, set `<zstdEnabled>false</zstdEnabled>` until that change ships in a Spring Framework release.
 
 ### Example: Custom extensions and directories
 
@@ -66,6 +69,22 @@ By default, this compresses all text-based static resource files under Spring Bo
 </configuration>
 ```
 
+### Example: Disable Zstandard
+
+```xml
+<configuration>
+    <zstdEnabled>false</zstdEnabled>
+</configuration>
+```
+
+### Example: Lower Zstandard level for faster builds
+
+```xml
+<configuration>
+    <zstdLevel>3</zstdLevel>
+</configuration>
+```
+
 ### Example: Lower Brotli quality for faster builds
 
 ```xml
@@ -94,6 +113,8 @@ All configuration parameters can be set either in the plugin `<configuration>` b
 | `brotliQuality` | `compression.brotli.quality` | `11` | Brotli compression quality (0-11) |
 | `brotliEnabled` | `compression.brotli.enabled` | `true` | Enable Brotli compression |
 | `gzipEnabled` | `compression.gzip.enabled` | `true` | Enable Gzip compression |
+| `zstdEnabled` | `compression.zstd.enabled` | `true` | Enable Zstandard compression (see Spring Framework note above) |
+| `zstdLevel` | `compression.zstd.level` | `22` | Zstandard compression level (practical range 1-22) |
 | `skip` | `compression.skip` | `false` | Skip the plugin |
 
 ### Default file extensions
@@ -116,6 +137,19 @@ The `brotliQuality` parameter controls the trade-off between compression ratio a
 
 The default value of 11 gives the best compression. For faster builds (e.g., during development), a lower value like 4-6 may be preferable.
 
+### Zstandard level
+
+The `zstdLevel` parameter controls the trade-off between compression ratio and build time:
+
+| Level | Speed | Compression ratio |
+|---|---|---|
+| 1-3 | Fast | Lower |
+| 4-15 | Moderate | Good |
+| 16-19 | Slow | Better |
+| 20-22 | Very slow ("ultra" mode) | Best |
+
+The default value of 22 gives the best compression. Level 3 matches libzstd's own default and produces noticeably faster builds at the cost of a modest reduction in compression ratio. Note that zstd's decompression speed is, by design, largely independent of the compression level used, so a higher level does not slow down clients that serve the resulting `.zst` files.
+
 ## Spring Boot integration
 
 This plugin generates pre-compressed files that Spring Framework's `EncodedResourceResolver` can serve automatically. To enable this, add the following property to your `application.properties`:
@@ -126,6 +160,8 @@ spring.web.resources.chain.compressed=true
 ```
 
 When this property is enabled, Spring Boot will look for `.br` or `.gz` variants of the requested resource and serve the compressed version if the client supports it (via the `Accept-Encoding` header).
+
+`.zst` support in `EncodedResourceResolver` is pending upstream (see [spring-projects/spring-framework#36647](https://github.com/spring-projects/spring-framework/pull/36647)). Until that change is released, set `<zstdEnabled>false</zstdEnabled>` if you are serving assets via Spring's resource chain.
 
 For more details, see the Spring documentation:
 
