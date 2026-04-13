@@ -80,6 +80,19 @@ public class CompressMojo extends AbstractMojo {
 	@Parameter(property = "compression.gzip.enabled", defaultValue = "true")
 	private boolean gzipEnabled;
 
+	/**
+	 * Whether to enable Zstandard compression.
+	 */
+	@Parameter(property = "compression.zstd.enabled", defaultValue = "true")
+	private boolean zstdEnabled;
+
+	/**
+	 * Zstandard compression level. The practical range is 1-22, where 22 is the maximum
+	 * ("ultra" mode). Higher values produce smaller files but take longer.
+	 */
+	@Parameter(property = "compression.zstd.level", defaultValue = "22")
+	private int zstdLevel;
+
 	@Override
 	public void execute() throws MojoExecutionException {
 		if (this.skip) {
@@ -98,6 +111,9 @@ public class CompressMojo extends AbstractMojo {
 		}
 		if (this.gzipEnabled) {
 			compressorBuilder.addCompressor(new GzipCompressor());
+		}
+		if (this.zstdEnabled) {
+			compressorBuilder.addCompressor(new ZstdCompressor(this.zstdLevel));
 		}
 		StaticResourceCompressor compressor = compressorBuilder.build();
 

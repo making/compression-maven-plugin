@@ -54,6 +54,28 @@ class StaticResourceCompressorTest {
 	}
 
 	@Test
+	void compressesWithAllThreeCompressors() throws Exception {
+		Path staticDir = this.tempDir.resolve("static");
+		Files.createDirectories(staticDir);
+		Files.writeString(staticDir.resolve("app.js"), "console.log('hello');");
+
+		StaticResourceCompressor compressor = StaticResourceCompressor.builder()
+			.addCompressor(new BrotliCompressor(11))
+			.addCompressor(new GzipCompressor())
+			.addCompressor(new ZstdCompressor(22))
+			.build();
+		List<CompressionResult> results = compressor.compress(staticDir);
+
+		assertThat(results).hasSize(1);
+		assertThat(results.get(0).compressedSize("br")).isGreaterThan(0);
+		assertThat(results.get(0).compressedSize("gz")).isGreaterThan(0);
+		assertThat(results.get(0).compressedSize("zst")).isGreaterThan(0);
+		assertThat(staticDir.resolve("app.js.br")).exists();
+		assertThat(staticDir.resolve("app.js.gz")).exists();
+		assertThat(staticDir.resolve("app.js.zst")).exists();
+	}
+
+	@Test
 	void doesNotCompressNonMatchingExtensions() throws Exception {
 		Path staticDir = this.tempDir.resolve("static");
 		Files.createDirectories(staticDir);
